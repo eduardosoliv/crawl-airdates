@@ -1,0 +1,6 @@
+poetry.lock
+exportseries.egg-info/
+exportseries/__pycache__/
+tests/__pycache__/
+.coverage
+*.csv
