@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "exportseries"
+version = "0.1.0"
+description = ""
+authors = ["Eduardo Oliveira <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+beautifulsoup4 = "^4.9.3"
+click = "^7.1.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+coverage = "^5.3.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
