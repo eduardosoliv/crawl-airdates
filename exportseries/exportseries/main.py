@@ -1,22 +1,23 @@
 import requests
 from bs4 import BeautifulSoup
 import click
-import urllib
+from urllib import parse
 import csv
+from typing import Set
 
 airdates_baseurl = 'https://www.airdates.tv/'
 omdbapi_baseurl = 'http://www.omdbapi.com/'
 
-def get_page(url):
+def get_page(url: str) -> requests.Response:
     page = requests.get(url)
     if not page.ok:
       raise Exception("Error, unable to fetch " + url + " status code " + str(page.status_code))
     return page
 
-def extract_serie_name(serie_name):
+def extract_serie_name(serie_name : str) -> str:
   return serie_name.rsplit(' ', 1)[0]
 
-def get_series(content):
+def get_series(content: bytes) -> set:
     soup = BeautifulSoup(content, 'html.parser')
     series = set()
     for elem in soup.findAll("div", {"class": "title"}):
@@ -25,11 +26,11 @@ def get_series(content):
         raise Exception("Error, unable to find series on page content")
     return series
 
-def get_serie_data(series_name, apikey):
-  omdbapi_args = urllib.parse.urlencode({ 't' : series_name, 'apikey' : apikey})
+def get_serie_data(series_name: str, apikey: str) -> dict:
+  omdbapi_args = parse.urlencode({ 't' : series_name, 'apikey' : apikey})
   return get_page(omdbapi_baseurl + '?' + omdbapi_args).json()
 
-def write_csv(series, outputfilename, apikey):
+def write_csv(series: Set[str], outputfilename: str, apikey: str):
   with open(outputfilename, 'w', newline='') as outputfile:
     writer = csv.writer(outputfile)
     writer.writerow([
@@ -66,7 +67,7 @@ def write_csv(series, outputfilename, apikey):
 @click.command()
 @click.option('--apikey', required=True, help='OMDb API Key')
 @click.option('--outputfilename', default='dump.csv', help='Name of file to output CSV, default dump.csv')
-def get_ratings(apikey, outputfilename):
+def get_ratings(apikey: str, outputfilename: str):
   airdates = get_page(airdates_baseurl)
   series = get_series(airdates.content)
   write_csv(series, outputfilename, apikey)
