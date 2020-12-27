@@ -42,7 +42,7 @@ To run tests:
 pytest
 ```
 
-To check coverage
+To check coverage:
 ```
 coverage run -m --source=. pytest
 coverage report -m
