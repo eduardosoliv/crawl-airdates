@@ -2,7 +2,7 @@
 name = "exportseries"
 version = "0.1.0"
 description = ""
-authors = ["Eduardo Oliveira <you@example.com>"]
+authors = ["Eduardo Oliveira <me@eduardooliveira.net>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
