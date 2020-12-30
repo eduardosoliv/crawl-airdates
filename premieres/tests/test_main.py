@@ -4,7 +4,7 @@ from unittest.mock import patch
 from premieres import main
 
 def test_get_page():
-  with patch('exportseries.main.requests.get') as mock_request:
+  with patch('premieres.main.requests.get') as mock_request:
     url = 'http://google.com/'
     mock_request.return_value.ok = True
     mock_request.return_value.status_code = 200
@@ -12,7 +12,7 @@ def test_get_page():
     mock_request.assert_called_once_with(url)
 
 def test_get_page_raises_exception():
-  with patch('exportseries.main.requests.get') as mock_request:
+  with patch('premieres.main.requests.get') as mock_request:
     with pytest.raises(Exception):
       mock_request.return_value.ok = False
       mock_request.return_value.status_code = 404
