@@ -1,8 +1,10 @@
-import click
+import typer
 import requests
 from bs4 import BeautifulSoup
 
 airdates_baseurl = 'https://www.airdates.tv/'
+
+app = typer.Typer()
 
 def get_page(url: str) -> requests.Response:
     page = requests.get(url)
@@ -28,17 +30,13 @@ def printseries(type: str):
   for serie in series:
     print(serie)
 
-@click.group()
-def premieres():
-    pass
-
-@premieres.command()
-def series(**kwargs):
+@app.command()
+def series():
   printseries('series')
 
-@premieres.command()
-def season(**kwargs):
+@app.command()
+def season():
   printseries('season')
 
 if __name__ == '__main__':
-    premieres()
+    app()
